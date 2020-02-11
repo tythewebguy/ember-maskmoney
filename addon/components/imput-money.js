@@ -29,8 +29,6 @@ export default TextField.extend({
 
   didInsertElement() {
     once(() => {
-
-      
       this.$().maskMoney(this.get('options'));
       if((this.get('allowZero') && (this.get('number') !== undefined)) || this.get('number')){
         this.notifyPropertyChange('number');
@@ -56,8 +54,8 @@ export default TextField.extend({
     this.$().maskMoney('mask');
   }),
 
-  setUnmaskedValue: observer('value', 'allowDecimal', function() {
-    if(this.get('allowDecimal')){
+  setUnmaskedValue: observer('value', 'allowDecimal', 'precision', function() {
+    if(this.get('allowDecimal') && this.get('precision') !== 0){
       this.set('number', this.$().maskMoney('unmasked')[0]);
     } else {
       this.set('number', this.get('value').replace(/[^0-9]/g, ''));
