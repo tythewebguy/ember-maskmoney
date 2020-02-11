@@ -29,12 +29,7 @@ export default TextField.extend({
 
   didInsertElement() {
     once(() => {
-      
-      // Fix allowDecimal bug when precision is 0.
-      let options = this.get('options');
-      if (options.precision === 0) {
-        options.allowDecimal = false;
-      }
+
       
       this.$().maskMoney(this.get('options'));
       if((this.get('allowZero') && (this.get('number') !== undefined)) || this.get('number')){
