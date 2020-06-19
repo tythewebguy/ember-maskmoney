@@ -29,7 +29,7 @@ export default TextField.extend({
 
   didInsertElement() {
     once(() => {
-      this.$().maskMoney(this.get('options'));
+      jQuery.maskMoney(this.get('options'));
       if((this.get('allowZero') && (this.get('number') !== undefined)) || this.get('number')){
         this.notifyPropertyChange('number');
       }
@@ -38,25 +38,25 @@ export default TextField.extend({
   },
 
   willDestroyElement() {
-    this.$().maskMoney('destroy');
+    jQuery.maskMoney('destroy');
     this._super(...arguments);
   },
 
   setMask: observer('options', function(){
-    this.$().maskMoney(this.get('options'));
-    this.$().maskMoney('mask');
+    jQuery.maskMoney(this.get('options'));
+    jQuery.maskMoney('mask');
   }),
 
   setMaskedValue: observer('number', 'precision', 'decimal', function(){
     let number = parseFloat(this.get('number') || 0).toFixed(this.get('precision'));
     let val = number.toString().replace('.', this.get('decimal'));
-    this.$().val(val);
-    this.$().maskMoney('mask');
+    jQuery.val(val);
+    jQuery.maskMoney('mask');
   }),
 
   setUnmaskedValue: observer('value', 'allowDecimal', 'precision', function() {
     if(this.get('allowDecimal') && this.get('precision') !== 0){
-      this.set('number', this.$().maskMoney('unmasked')[0]);
+      this.set('number', jQuery.maskMoney('unmasked')[0]);
     } else {
       this.set('number', this.get('value').replace(/[^0-9]/g, ''));
     }
